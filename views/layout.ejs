@@ -1,0 +1,94 @@
+<html>
+    <head>
+        <title>
+            <%= title  %>
+        </title>
+
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+
+        <!-- jquery cdn link -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+        <link rel="stylesheet" href="/css/layout.css">
+        <link rel="stylesheet" href="/css/header.css">
+        <link rel="stylesheet" href="/css/footer.css">
+
+        <%- style %>
+        
+    </head>
+
+    <body>
+         <%- include('_header'); %> 
+
+        <!--  here we took flash.success.length >0 since this message should not be an empty.. --> 
+        <!-- <% if(flash.success && flash.success.length>0){ %> -->
+            <!-- <h5> -->
+                <!-- <%=flash.success %> -->
+            <!-- </h5> -->
+            
+            
+            
+        <!-- <% }%> --> 
+
+        <!-- instead of above flash messages now we are adding the noty.library flash messages -->
+
+
+        <main id="layout-main">
+            <%- body %>
+
+        </main>
+
+
+        <%- include('_footer'); %>
+
+        <%- script %>
+
+        <script>
+
+            //just dont worry about this error red marks since it is an js we get like this but it works fine..
+            <%if (flash.success  && flash.success.length>0){%>
+                
+                // i had copied this from this from the noty.js from google in the installation pannel
+                new Noty({
+                    theme:'relax', //this relax is an preloaded theme..
+                    text: "<%= flash.success %>",
+                    type:"success",  //u can check in that doc which type which theme u want toooo or in that u can check in the type as well
+
+                    //where we want to display i.e layout
+                    layout:'topRight',
+                    //in how much time u want to go
+                    timeout:1500 //this is calculated in milli seconds
+
+                }).show();    
+                
+                
+            <%} %>
+
+
+            //displaying the error message
+            <%if (flash.error  && flash.error.length>0){%>
+                
+                // i had copied this from this from the noty.js from google in the installation pannel
+                new Noty({
+                    theme:'relax', //this relax is an preloaded theme..
+                    text: "<%= flash.error %>",
+                    type:"error",  //u can check in that doc which type which theme u want toooo or in that u can check in the type as well
+
+                    //where we want to display i.e layout
+                    layout:'topRight',
+                    //in how much time u want to go
+                    timeout:1500 //this is calculated in milli seconds
+
+                }).show();    
+                
+                
+            <%} %>
+        </script>
+
+
+
+        
+    </body>
+</html>

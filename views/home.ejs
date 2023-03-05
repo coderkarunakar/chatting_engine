@@ -1,0 +1,92 @@
+-
+<!-- this below link is for the scss folder home.scss file its css styling is in that file pls go and visit+in css folder home.css also..-->
+
+<link rel="stylesheet" href="/css/home.css">
+<link rel="stylesheet" href="/css/chat_box.css">
+
+
+
+<h1>
+    Codeial / <%= title %> page
+</h1>
+
+<div id="home-container">
+            <section id="feed-posts">
+                <h4>Posts</h4> 
+            
+                <!-- here locals is just an object if we keep only user we cannot fetch it throuws an error user is not found by this way we can restrict the user,by this we can restrict that only signed in user can post  -->
+                <% if(locals.user){ %>
+                <form action="/posts/create" id="new-post-form" method="POST">
+                    <textarea name="content" cols="30" rows="3" placeholder="Type Here..." required>
+                    </textarea>
+                    <input type="submit" value="Post">
+                </form>
+                <% } %>
+            
+            
+                            <!-- for destroying i.e deletin post -->
+            
+            
+            <div id="posts-list-container">
+                <ul>
+                    <% for(post of posts){ %> 
+                        
+                        <%- include('_post')-%>
+                        
+                    <%}%>   
+                </ul>
+            
+            </div>
+            </section>
+
+
+
+    <!-- showing all the users -->
+
+
+
+            <section id="user-friends">
+                <!-- this is just an title -->
+            <h4>Friends</h4>
+            <% for(u of all_users){%>
+                    <!-- this p tag displays name of the user  which is link to the profile of the user -->
+                <p>
+                    
+                    <!-- here we need to display the users profile which has been asked in this id ---->
+                    <!-- this below line makes us to print the users  in the home page -->
+                    <a href="/users/profile/<%= u.id %>"><%= u.name %></a>
+                </p>
+            <% } %>
+            </section>
+<!-- here even if u dont give its extension its ok it will automatically takes up -->
+        <%- include('_chat_box') -%>
+    
+</div>
+
+
+<!-- importing this script for creating the comments -->
+<script src="/js/home_post_comments.js" ></script>
+<script src="/js/home_posts.js"></script>
+
+<!-- CHANGE :: import the script file for toggle likes, also run it over for the already present posts and comments on the page -->
+<script src="js/toggle_likes.js"></script>
+<script>
+    $('.toggle-like-button').each(function(){
+        let self = this;
+        let toggleLike = new ToggleLike(self);
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.0/socket.io.js"></script>
+<!-- here chat engine is the file that is going to be communicated from the client side that is you only  -->
+<script src="/js/chat_engine.js"></script> 
+
+
+<!-- this is the frontend established for communcicating eachother -->
+
+<% if(locals.user) {%>
+<script >
+    // this happens only if the locals .user is present,because we dont want anonymous to communicate ,here we are wanting to send the email
+new ChatEngine('user-chat-box', '<%= locals.user.email %>')
+
+</script>
+<% } %>

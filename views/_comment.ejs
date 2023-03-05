@@ -1,0 +1,32 @@
+<li>
+      <!-- p tag is for showing the comments -->
+                                <!-- here content is took from the schema page of comments,and comment is took from the above for loop comment -->
+    <P>
+        <% if (locals.user && locals.user.id == comment.user.id){%>
+            <small>
+            <a href="/comments/destroy/<%= comment.id %>">X</a>
+            </small>
+
+        <% } %>
+    <%= comment.content %>
+    <br>
+    <!-- small is for showing the user  actually the small tags in html refers to side comments and small print-->
+    <small>
+        <%= comment.user.name %>
+    </small>
+
+    
+    <!-- CHANGE :: display the likes of this comment, if the user is logged in, then show the link to toggle likes, else, just show the count -->
+            <!-- study about the data attribute -->
+            <small>
+                <% if (locals.user){ %>
+                    <a class="toggle-like-button" data-likes="<%= comment.likes.length %>" href="/likes/toggle/?id=<%=comment._id%>&type=Comment">
+                            <%= comment.likes.length %> Likes
+                    </a>
+                <% }else{ %>
+                    <%= comment.likes.length %> Likes
+                <% } %>
+            </small>
+    </P> 
+
+</li>

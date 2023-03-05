@@ -1,0 +1,29 @@
+        <link rel="stylesheet" href="/css/user_profile.css">
+        <h1>
+            Codeial / Profile Page
+        </h1>
+        <!-- here alt is used for when the image is not ther it will display the text  ,with the below line we can see an image in the browser-->
+<img src="<%= user.avatar %>"  alt="user.name" width="100">
+
+<!-- //UPDATING THE USER PROFILE  -->
+<!-- with the help of this code we can change the name email in the profile page  -->
+
+<!-- if user matches then show the form if not then show only profile page info -->
+        
+<% if(user.id == profile_user.id){ %>
+    <!-- if user matches then show the form -->
+    <!-- with the help of this post method only we are able to send our data to the database  -->
+    <form action="/users/update/<%= profile_user.id %>" enctype="multipart/form-data"       method="POST">
+        <input type="text" name="name" placeholder="Your Name" value="<%= profile_user.name %>" required>
+        <input type="email" name="email" placeholder="Your Email" value="<%= profile_user.email %>" required>
+
+
+        <input type="file" name="avatar" placeholder="profile picture" >
+        <input type="submit"  value="Update">
+    </form>
+    
+<%}else{%>    
+    <!-- else show only the profile info -->
+    <p><%= profile_user.name %></p>
+    <p><%= profile_user.email %></p>
+<%} %> 

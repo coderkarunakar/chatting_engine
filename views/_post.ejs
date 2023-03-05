@@ -1,0 +1,77 @@
+  <!-- here we can use either _id or only id no matters in the template -->
+  <li id="post-<%= post._id%>">  
+                <P>
+                    <!-- if user is signed in and the user is equal too who created the post -->
+                    <% if(locals.user &&  locals.user.id == post.user.id){%>
+                    <small>
+                        <!-- below _id also works in the same way -->
+                        <a class="delete-post-button" href="/posts/destroy/<%= post.id %>">X</a>
+                    </small>
+                    <%}%>
+   
+
+                    <!-- this below post is took fromt the above for loop post -->
+                    <%= post.content %>
+                    <br>
+                    <small>
+                        <!-- here user refers to the user object type object id and refers to the model,and name is took from above form only -->
+                        <%= post.user.name %> 
+                    </small>
+                    
+        <!-- CHANGE :: display the likes of this post, if the user is logged in, then show the link to toggle likes, else, just show the count -->
+        <br>
+        <!-- study about the data attribute -->
+    <small>
+        <% if (locals.user){ %>
+            <a class="toggle-like-button" data-likes="<%= post.likes.length %>" href="/likes/toggle/?id=<%=post._id%>&type=Post">
+                    <%= post.likes.length %> Likes
+            </a>
+        <% }else{ %>
+            <%= post.likes.length %> Likes
+        <% } %>
+    </small>
+                </P>    
+
+
+
+                        <!-- COMMENTS... -->
+
+
+
+                            <!-- creating a form page for comments... -->
+                <div class="post-comments">
+                <!-- we need to show this form to only those are signed in so we took local.user -->
+                    <% if(locals.user){%>
+                        <!-- here method is post since we are sending some data ,here comments and create is took from routes(index.js)+controllers(comments file action)-->
+                        <form action="/comments/create" method="POST">
+                            <input type="text" name="content" placeholder="type here to add comment.." required>
+
+                            <!-- id of the post to which comment need  to be added either we allow user to send that or place it in an hidden input -->
+                            <input type="hidden" name="post" value="<%= post._id %>">
+                            <input type="submit" value="Add Comment">
+
+                        </form>                  
+                    <% } %>
+
+
+
+                                    <!-- deleting comments -->
+
+
+                    <div class="post-comments-list">
+                        <ul id="post-comments-<%=post._id %>">
+                    <!-- since the comments are inside the post -->
+                            <% for(comment of post.comments){%> 
+                              
+
+                                <!-- here am just calling it  comment.ejs file in order to reduce no of lines of code we are doing this calling method..-->
+                                <%-include('_comment')-%>
+                               
+                  
+                            <%} %> 
+
+                        </ul>
+                    </div>
+        
+                </div>
+</li>

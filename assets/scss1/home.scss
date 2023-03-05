@@ -1,0 +1,25 @@
+
+// this file is linked in the home .ejs and with this we can make that as flex(i.e side by side)
+// with this id we can make it visible aside by aside
+#home-container{
+    display: flex;
+
+    // with this we can adjust that side by side content to large width or small width and now this applicable to whole
+    #feed-posts{
+        width: 70%;
+        padding: 10px;
+
+
+    }
+//this is applicable to only the number of users  only..
+    #user-friends{
+        width: 30%;
+        // this padding is for the gap maintainance between that green line and the text that's it 
+        padding: 30px;
+
+        // this below border is for  the line just beside the users
+        border-left: 1px solid lightgreen;
+
+    }
+
+}

@@ -1,0 +1,5 @@
+const express = require('express');
+const router = express.Router();
+router.use('/v1', require('./v1'));
+//with this below line it mean that this file can be exported to router
+module.exports= router;
